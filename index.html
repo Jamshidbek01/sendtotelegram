@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+
+    <input type="text" id="fname" name="fname" placeholder="fullname">
+    <input type="text" id="country" name="country" placeholder="country">
+    <input type="button" id="add_button" value="Submit">
+    <div id="response"></div>
+    <!-- <button value="Joylashuvni ko`rsat" onclick="qayerdaman()">aniqla</button> -->
+
+    <script>
+        const token = '5208567135:AAFyAFtQiaFJR1dliq00RTOOwO1v2Z5apBQ';
+        const chatId = '1903798216';
+        //const chatId = '-1001593579467s';
+
+        $(document).ready(function () {
+            $("#add_button").on('click', function (event) {
+                execute();
+            });
+
+            function execute() {
+                const fname = document.querySelector('#fname').value;
+                const country = document.querySelector('#country').value;
+                const message = `Fullname: ${fname}\nCountry: ${country}`;
+
+                $.ajax({
+                    type: 'POST',
+                    url: `https://api.telegram.org/bot${token}/sendMessage`,
+                    data: {
+                        chat_id: chatId,
+                        text: message,
+                        parse_mode: 'html',
+                    },
+                    success: function (res) {
+                        console.debug(res);
+                        $('#response').text('Message sent');
+                    },
+                    error: function (error) {
+                        console.error(error);
+                        alert("error failed");
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="js.js"></script>
+    
+</body>
+
+</html>
